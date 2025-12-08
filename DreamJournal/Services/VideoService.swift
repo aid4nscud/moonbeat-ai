@@ -16,7 +16,7 @@ enum VideoServiceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noCredits:
-            return "No video credits remaining. Upgrade to Pro for unlimited videos."
+            return "No video credits remaining. Upgrade to Pro for 30 videos per month."
         case .quotaExceeded(let used, let limit, let resets):
             let formatter = DateFormatter()
             formatter.dateFormat = "MMMM d"

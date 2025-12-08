@@ -1,6 +1,7 @@
 import SwiftUI
 import Supabase
 import RevenueCat
+import FBSDKCoreKit
 
 // MARK: - Tab Controller
 
@@ -38,9 +39,12 @@ class TabController: ObservableObject {
 
 @main
 struct DreamJournalApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     @StateObject private var authService = AuthService.shared
     @StateObject private var purchaseService = PurchaseService.shared
     @StateObject private var tabController = TabController.shared
+    @StateObject private var metaAnalytics = MetaAnalyticsService.shared
 
     init() {
         configureAppearance()
@@ -52,21 +56,30 @@ struct DreamJournalApp: App {
                 .environmentObject(authService)
                 .environmentObject(purchaseService)
                 .environmentObject(tabController)
+                .environmentObject(metaAnalytics)
                 .preferredColorScheme(.dark)
                 .task {
+                    // Activate Meta app events
+                    metaAnalytics.trackAppActivated()
+
                     await authService.checkExistingSession()
 
                     // Configure RevenueCat when user is authenticated
                     if let userId = authService.currentUser?.id.uuidString {
                         await purchaseService.configure(userId: userId)
+                        metaAnalytics.setUserId(userId)
                     }
                 }
                 .onChange(of: authService.isAuthenticated) { _, isAuthenticated in
                     Task {
                         if isAuthenticated, let userId = authService.currentUser?.id.uuidString {
                             await purchaseService.configure(userId: userId)
+                            metaAnalytics.setUserId(userId)
+                            metaAnalytics.trackRegistration(method: "Apple")
+                            metaAnalytics.updateConversionValue(for: .registered)
                         } else {
                             purchaseService.cleanup()
+                            metaAnalytics.setUserId(nil)
                         }
                     }
                 }

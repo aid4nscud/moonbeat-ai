@@ -138,6 +138,12 @@ struct CustomSubscriptionView: View {
             withAnimation(.spring(response: 0.6, dampingFraction: 0.6).repeatForever(autoreverses: true).delay(0.5)) {
                 animateBadge = true
             }
+
+            // Track paywall view for Meta Ads
+            Task {
+                await MetaAnalyticsService.shared.trackPaywallViewed(source: "subscription_view")
+                await MetaAnalyticsService.shared.updateConversionValue(for: .paywallViewed)
+            }
         }
         .alert("Unable to Complete", isPresented: $showError) {
             Button("OK") { }
@@ -211,9 +217,9 @@ struct CustomSubscriptionView: View {
 
     private var featuresSection: some View {
         VStack(spacing: 14) {
-            FeatureRowEnhanced(icon: "infinity", title: "Unlimited dream videos", subtitle: "No limits, ever")
+            FeatureRowEnhanced(icon: "sparkles", title: "30 dream videos/month", subtitle: "Fresh quota every month")
             FeatureRowEnhanced(icon: "waveform", title: "60-second visualizations", subtitle: "Longer, richer videos")
-            FeatureRowEnhanced(icon: "chart.line.uptrend.xyaxis", title: "Emotional insights", subtitle: "Track your patterns")
+            FeatureRowEnhanced(icon: "chart.line.uptrend.xyaxis", title: "AI dream insights", subtitle: "Deep pattern analysis")
             FeatureRowEnhanced(icon: "bolt.fill", title: "Priority processing", subtitle: "Skip the queue")
         }
         .padding(20)

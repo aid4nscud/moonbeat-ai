@@ -230,6 +230,9 @@ final class PurchaseService: ObservableObject {
             }
 
             updateCustomerInfo(result.customerInfo)
+
+            // Track conversion to Meta Ads
+            await trackPurchaseConversion(package: package)
         } catch let error as PurchaseError {
             throw error
         } catch {
@@ -244,6 +247,61 @@ final class PurchaseService: ObservableObject {
             }
             throw PurchaseError.purchaseFailed(error)
         }
+    }
+
+    /// Track purchase conversion to Meta Ads
+    private func trackPurchaseConversion(package: Package) async {
+        let product = package.storeProduct
+        let price = product.price
+        let currency = product.currencyCode ?? "USD"
+        let productId = product.productIdentifier
+
+        let meta = MetaAnalyticsService.shared
+
+        switch package.packageType {
+        case .lifetime:
+            await meta.trackLifetimePurchase(
+                productId: productId,
+                price: price,
+                currency: currency
+            )
+            await meta.updateConversionValue(for: .lifetimePurchased)
+
+        case .annual:
+            // Yearly subscription
+            let isTrialConversion = customerInfo?.entitlements[PurchaseConfig.proEntitlement]?.periodType == .trial
+            await meta.trackSubscription(
+                productId: productId,
+                price: price,
+                currency: currency,
+                subscriptionType: "yearly",
+                isTrialConversion: isTrialConversion
+            )
+            await meta.updateConversionValue(for: .subscribed)
+
+        case .monthly:
+            // Monthly subscription
+            let isTrialConversion = customerInfo?.entitlements[PurchaseConfig.proEntitlement]?.periodType == .trial
+            await meta.trackSubscription(
+                productId: productId,
+                price: price,
+                currency: currency,
+                subscriptionType: "monthly",
+                isTrialConversion: isTrialConversion
+            )
+            await meta.updateConversionValue(for: .subscribed)
+
+        default:
+            // Fallback for any other purchase type
+            await meta.trackInAppPurchase(
+                productId: productId,
+                price: price,
+                currency: currency
+            )
+        }
+
+        // Update user properties
+        await meta.setUserProperties(isPro: true)
     }
 
     /// Purchase a specific subscription type

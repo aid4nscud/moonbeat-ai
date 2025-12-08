@@ -12,6 +12,7 @@ enum AuthError: LocalizedError {
     case profileCreationFailed(Error)
     case profileFetchFailed(Error)
     case quotaFetchFailed(Error)
+    case deleteAccountFailed(Error)
 
     var errorDescription: String? {
         switch self {
@@ -29,6 +30,8 @@ enum AuthError: LocalizedError {
             return "Failed to load profile: \(error.localizedDescription)"
         case .quotaFetchFailed(let error):
             return "Failed to load video quota: \(error.localizedDescription)"
+        case .deleteAccountFailed(let error):
+            return "Failed to delete account: \(error.localizedDescription)"
         }
     }
 }
@@ -142,6 +145,33 @@ final class AuthService: ObservableObject {
             isAuthenticated = false
         } catch {
             throw AuthError.signOutFailed(error)
+        }
+    }
+
+    // MARK: - Delete Account
+
+    /// Permanently delete the user's account and all associated data
+    /// This action cannot be undone
+    func deleteAccount() async throws {
+        isLoading = true
+        defer { isLoading = false }
+
+        do {
+            // Call the RPC function to delete user data (dreams, video_jobs, profile)
+            try await supabase.rpc("delete_user_account").execute()
+
+            // Sign out the user (this also clears local state)
+            try await supabase.auth.signOut()
+
+            // Clear local state
+            currentUser = nil
+            userProfile = nil
+            isAuthenticated = false
+
+            // Clean up RevenueCat
+            PurchaseService.shared.cleanup()
+        } catch {
+            throw AuthError.deleteAccountFailed(error)
         }
     }
 

@@ -110,6 +110,7 @@ struct SignInView: View {
                         .offset(x: showFeatures ? 0 : -30)
                         .animation(.easeOut(duration: 0.5).delay(0.2), value: showFeatures)
                 }
+                .frame(maxWidth: 400)
                 .padding(.horizontal, 32)
                 .animation(.easeOut(duration: 0.5), value: showFeatures)
 
@@ -176,6 +177,7 @@ struct SignInView: View {
                             .foregroundStyle(Color.white.opacity(0.5))
                     }
                 }
+                .frame(maxWidth: 400)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 40)
                 .opacity(showButtons ? 1 : 0)
@@ -258,8 +260,6 @@ private struct FeatureRow: View {
             Text(text)
                 .font(.system(size: 16, weight: .medium))
                 .foregroundStyle(Color.white.opacity(0.85))
-
-            Spacer()
         }
     }
 }

@@ -110,7 +110,15 @@ let details = purchaseService.subscriptionDetails
 ## Freemium Model
 
 - **Free tier**: 3 video credits (tracked in `profiles.credits_remaining`)
-- **Pro tier**: Unlimited videos (checked via `purchaseService.isPro`)
-- **Lifetime**: One-time purchase, no expiration
+- **Pro tier**: 30 videos per month (quota resets monthly, checked via `purchaseService.isPro`)
+- **Lifetime**: One-time purchase, no expiration, 30 videos per month
 - Credits deducted in Edge Function, refunded on generation failure
 - Subscription status synced to Supabase `profiles.subscription_tier`
+
+## Pro Features
+
+- **30 dream videos per month** - Monthly quota that resets on the 1st
+- **AI Dream Interpretation** - Personalized analysis via `analyze-dream` Edge Function
+- **Full Emotional Insights** - Complete theme/emotion breakdown, emotional trend charts
+- **Pattern Analysis** - Day of week patterns, year in dreams
+- **Priority Processing** - Skip the queue for video generation

@@ -234,7 +234,7 @@ extension PurchaseService {
             return nil
         }
         if creditsRemaining <= 0 {
-            return "No credits remaining. Upgrade to Pro for unlimited videos."
+            return "No credits remaining. Upgrade to Pro for 30 videos per month."
         }
         return nil
     }
@@ -433,10 +433,10 @@ struct CreditWarningSheet: View {
 
             // Benefits
             VStack(alignment: .leading, spacing: MBSpacing.sm) {
-                benefitRow(icon: "infinity", text: "Unlimited dream videos")
+                benefitRow(icon: "sparkles", text: "30 dream videos per month")
                 benefitRow(icon: "chart.line.uptrend.xyaxis", text: "Full emotional insights")
-                benefitRow(icon: "sparkle.magnifyingglass", text: "Deep pattern analysis")
-                benefitRow(icon: "crown.fill", text: "Priority video generation")
+                benefitRow(icon: "sparkle.magnifyingglass", text: "AI dream interpretation")
+                benefitRow(icon: "bolt.fill", text: "Priority video generation")
             }
             .padding(MBSpacing.lg)
             .background(MBColors.backgroundCard)
@@ -448,7 +448,7 @@ struct CreditWarningSheet: View {
                     HapticManager.shared.paywallPresented()
                     showPaywall = true
                 } label: {
-                    Text("Unlock Unlimited")
+                    Text("Upgrade to Pro")
                         .font(MBTypography.bodyBold())
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
@@ -529,7 +529,7 @@ struct LastCreditConfirmationView: View {
                 } label: {
                     HStack {
                         Image(systemName: "crown.fill")
-                        Text("Get Pro - Unlimited Videos")
+                        Text("Get Pro - 30 Videos/Month")
                     }
                     .font(MBTypography.bodyBold())
                     .foregroundStyle(.white)
@@ -576,7 +576,7 @@ struct NoCreditsPaywallView: View {
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                         .foregroundStyle(MBColors.textPrimary)
 
-                    Text("Unlock Pro for unlimited dream videos")
+                    Text("Upgrade to Pro for 30 dream videos per month")
                         .font(.system(size: 15))
                         .foregroundStyle(MBColors.textSecondary)
                         .multilineTextAlignment(.center)
@@ -585,9 +585,9 @@ struct NoCreditsPaywallView: View {
 
             // Features
             VStack(alignment: .leading, spacing: MBSpacing.sm) {
-                featureRow("infinity", "Unlimited dream videos")
+                featureRow("sparkles", "30 dream videos per month")
                 featureRow("chart.line.uptrend.xyaxis", "Full emotional analytics")
-                featureRow("sparkle.magnifyingglass", "Pattern & trend insights")
+                featureRow("sparkle.magnifyingglass", "AI dream interpretation")
                 featureRow("bolt", "Priority generation")
             }
             .padding(MBSpacing.lg)

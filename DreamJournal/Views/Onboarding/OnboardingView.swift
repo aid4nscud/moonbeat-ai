@@ -1,4 +1,5 @@
 import SwiftUI
+import AppTrackingTransparency
 
 // MARK: - Onboarding Page
 
@@ -142,6 +143,17 @@ struct OnboardingView: View {
         // Schedule notifications if granted
         if notificationsGranted {
             NotificationService.shared.scheduleMorningReminder()
+        }
+
+        // Track onboarding completion
+        Task {
+            await MetaAnalyticsService.shared.trackOnboardingComplete()
+            await MetaAnalyticsService.shared.updateConversionValue(for: .onboardingComplete)
+
+            // Request ATT permission after a brief delay
+            // This gives the best opt-in rates according to Meta guidelines
+            try? await Task.sleep(nanoseconds: 500_000_000) // 0.5 second delay
+            _ = await MetaAnalyticsService.shared.requestTrackingAuthorization()
         }
 
         withAnimation {

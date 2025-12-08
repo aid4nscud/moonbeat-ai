@@ -10,6 +10,8 @@ struct SettingsView: View {
     @State private var showSubscription = false
     @State private var showCustomerCenter = false
     @State private var showSignOutConfirmation = false
+    @State private var showDeleteAccountConfirmation = false
+    @State private var showDeleteAccountFinalConfirmation = false
     @State private var error: Error?
     @State private var showError = false
     @State private var appeared = false
@@ -45,6 +47,10 @@ struct SettingsView: View {
                             .opacity(appeared ? 1 : 0)
                             .offset(y: appeared ? 0 : 10)
                             .animation(.easeOut(duration: 0.4).delay(0.2), value: appeared)
+                        deleteAccountSection
+                            .opacity(appeared ? 1 : 0)
+                            .offset(y: appeared ? 0 : 10)
+                            .animation(.easeOut(duration: 0.4).delay(0.25), value: appeared)
                     }
                     .padding(.horizontal, MBSpacing.md)
                     .padding(.vertical, MBSpacing.md)
@@ -81,6 +87,22 @@ struct SettingsView: View {
             Button("Cancel", role: .cancel) { }
         } message: {
             Text("Are you sure you want to sign out?")
+        }
+        .confirmationDialog("Delete Account", isPresented: $showDeleteAccountConfirmation) {
+            Button("Delete Account", role: .destructive) {
+                showDeleteAccountFinalConfirmation = true
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("This will permanently delete your account and all your dreams. This action cannot be undone.")
+        }
+        .alert("Are you absolutely sure?", isPresented: $showDeleteAccountFinalConfirmation) {
+            Button("Cancel", role: .cancel) { }
+            Button("Delete Forever", role: .destructive) {
+                deleteAccount()
+            }
+        } message: {
+            Text("All your dreams, videos, and account data will be permanently deleted. This cannot be undone.")
         }
         .alert("Error", isPresented: $showError) {
             Button("OK") { }
@@ -694,6 +716,55 @@ struct SettingsView: View {
         .buttonStyle(.plain)
     }
 
+    // MARK: - Delete Account Section
+
+    private var deleteAccountSection: some View {
+        VStack(alignment: .leading, spacing: MBSpacing.sm) {
+            Text("Danger Zone")
+                .font(MBTypography.caption(.semibold))
+                .foregroundStyle(MBColors.error.opacity(0.8))
+                .padding(.leading, MBSpacing.xs)
+
+            Button {
+                HapticManager.shared.warning()
+                showDeleteAccountConfirmation = true
+            } label: {
+                HStack(spacing: MBSpacing.md) {
+                    Image(systemName: "trash.fill")
+                        .font(.system(size: 18))
+                        .foregroundStyle(MBColors.error)
+                        .frame(width: 32, height: 32)
+                        .background(MBColors.error.opacity(0.15))
+                        .clipShape(RoundedRectangle(cornerRadius: MBRadius.sm))
+
+                    VStack(alignment: .leading, spacing: MBSpacing.xxxs) {
+                        Text("Delete Account")
+                            .font(MBTypography.body())
+                            .foregroundStyle(MBColors.error)
+
+                        Text("Permanently delete your account and all data")
+                            .font(MBTypography.caption())
+                            .foregroundStyle(MBColors.textTertiary)
+                    }
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(MBColors.error.opacity(0.5))
+                }
+                .padding(MBSpacing.md)
+            }
+            .buttonStyle(.plain)
+            .background(MBColors.backgroundCard)
+            .clipShape(RoundedRectangle(cornerRadius: MBRadius.lg))
+            .overlay(
+                RoundedRectangle(cornerRadius: MBRadius.lg)
+                    .stroke(MBColors.error.opacity(0.2), lineWidth: 1)
+            )
+        }
+    }
+
     // MARK: - Customer Center Handler
 
     private func handleCustomerCenterAction(_ action: CustomerCenterAction) {
@@ -734,6 +805,17 @@ struct SettingsView: View {
             do {
                 try await authService.signOut()
                 purchaseService.cleanup()
+            } catch {
+                self.error = error
+                self.showError = true
+            }
+        }
+    }
+
+    private func deleteAccount() {
+        Task {
+            do {
+                try await authService.deleteAccount()
             } catch {
                 self.error = error
                 self.showError = true

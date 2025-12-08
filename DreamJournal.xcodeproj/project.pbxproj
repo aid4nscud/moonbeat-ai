@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		007838B56EFD616F7D0BE117 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1391A7E6C280295D4B8B550 /* AuthService.swift */; };
+		FBSDK001000000000000001 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = FBSDK001000000000000002 /* FacebookCore */; };
+		META001000000000000001 /* MetaAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = META001000000000000002 /* MetaAnalyticsService.swift */; };
+		APPD001000000000000001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPD001000000000000002 /* AppDelegate.swift */; };
 		02E211676B7303E96C329238 /* MBComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C75D3A23C43BF5E63F025F3 /* MBComponents.swift */; };
 		06090AD35602B318DBB0C14F /* VideoJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F55044D19D2C3DC20DF8FF8 /* VideoJob.swift */; };
 		06F021FDF753D9D1661302B0 /* VideoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B1E327D476846021EFFA1F /* VideoService.swift */; };
@@ -45,6 +48,8 @@
 
 /* Begin PBXFileReference section */
 		07C932B2EC4808D0F58C64C3 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		META001000000000000002 /* MetaAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaAnalyticsService.swift; sourceTree = "<group>"; };
+		APPD001000000000000002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0946C86275B70E99A1EFF195 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1196E58B7196FCF172039318 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		29F750DF431E80EE7DE73A06 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -85,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBSDK001000000000000001 /* FacebookCore in Frameworks */,
 				F50116B27E0882BFB94A1906 /* Supabase in Frameworks */,
 				BF7AB63BD170D327E6E50573 /* RevenueCat in Frameworks */,
 				DDFF5C908859F77A38785224 /* RevenueCatUI in Frameworks */,
@@ -105,6 +111,7 @@
 		112127078B7D31E9D19D96CA /* App */ = {
 			isa = PBXGroup;
 			children = (
+				APPD001000000000000002 /* AppDelegate.swift */,
 				C0CE85B312D98334932AF800 /* DreamJournalApp.swift */,
 			);
 			path = App;
@@ -142,6 +149,7 @@
 				9A4AB9595F6EC0B584E0902F /* DreamService.swift */,
 				9766A4AED510DED273835651 /* HapticManager.swift */,
 				CF1F9A978FC9EDD1C6BA4AA6 /* InsightsService.swift */,
+				META001000000000000002 /* MetaAnalyticsService.swift */,
 				62B0A08321881741C35F3A5D /* NotificationService.swift */,
 				1196E58B7196FCF172039318 /* PurchaseService.swift */,
 				C06078D6B5A9D82F0D554FA9 /* SpeechService.swift */,
@@ -298,6 +306,7 @@
 				DA263E37B9E9ACF095A6565E /* Supabase */,
 				180187A22F91852629ECEBEF /* RevenueCat */,
 				E52884A983FF0003AEFDE14B /* RevenueCatUI */,
+				FBSDK001000000000000002 /* FacebookCore */,
 			);
 			productName = DreamJournal;
 			productReference = 99BD26193249EE6717C9A75E /* Moonbeat AI.app */;
@@ -330,6 +339,7 @@
 			packageReferences = (
 				A1F8810785B55065CEF4980C /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 				7DFE038AD424C1F3A6046420 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				FBSDK001000000000000003 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
@@ -355,6 +365,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				APPD001000000000000001 /* AppDelegate.swift in Sources */,
+				META001000000000000001 /* MetaAnalyticsService.swift in Sources */,
 				007838B56EFD616F7D0BE117 /* AuthService.swift in Sources */,
 				F49CBCA4BC2A5E8DE94927F9 /* ConfettiView.swift in Sources */,
 				1F558A35B711B4F2126A6BC8 /* Dream.swift in Sources */,
@@ -447,7 +459,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -507,7 +519,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -600,6 +612,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		FBSDK001000000000000003 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 17.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -617,6 +637,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A1F8810785B55065CEF4980C /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
 			productName = RevenueCatUI;
+		};
+		FBSDK001000000000000002 /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FBSDK001000000000000003 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

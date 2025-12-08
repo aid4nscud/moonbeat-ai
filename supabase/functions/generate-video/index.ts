@@ -251,30 +251,56 @@ serve(async (req) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // MiniMax Video-01 (Hailuo) - 6s video generation
-          version: "5aa835260ff7f40f4069c41185f72036accf99e29957bb4a3b3a911f3b6c1912",
+          // Kling v2.5 Turbo Pro - 5s video generation
+          version: "939cd1851c5b112f284681b57ee9b0f36d0f913ba97de5845a7eef92d52837df",
           input: {
             prompt: `Cinematic, dreamlike, ethereal atmosphere: ${prompt}`,
-            prompt_optimizer: true
+            duration: 5,
+            aspect_ratio: "16:9",
+            negative_prompt: "blurry, low quality, distorted, ugly, bad anatomy"
           }
         }),
       }
     );
 
     if (!replicateResponse.ok) {
-      const errorText = await replicateResponse.text();
-      console.error("Replicate API error:", replicateResponse.status, errorText);
+      let errorText = "Unknown error";
+      try {
+        errorText = await replicateResponse.text();
+      } catch (e) {
+        errorText = `HTTP ${replicateResponse.status}`;
+      }
+
+      // Parse JSON error if possible for cleaner message
+      let errorMessage = errorText;
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorMessage = errorJson.detail || errorJson.title || errorJson.error || errorText;
+      } catch {
+        // Keep raw text
+      }
+
+      console.error("Replicate API error:", replicateResponse.status, errorMessage);
 
       // Update job status to failed (no credit was deducted yet)
-      await supabase
+      const { error: updateError } = await supabase
         .from("video_jobs")
-        .update({ status: "failed", error_message: errorText })
+        .update({ status: "failed", error_message: errorMessage.substring(0, 1000) })
         .eq("id", job.id);
 
+      if (updateError) {
+        console.error("Failed to update job with error:", updateError);
+      }
+
+      // Return appropriate status code based on Replicate error
+      const statusCode = replicateResponse.status === 402 ? 402 : 500;
       return new Response(
-        JSON.stringify({ error: `Video generation failed: ${errorText}` }),
+        JSON.stringify({
+          error: errorMessage,
+          code: replicateResponse.status === 402 ? "BILLING_REQUIRED" : "GENERATION_FAILED"
+        }),
         {
-          status: 500,
+          status: statusCode,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         }
       );

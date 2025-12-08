@@ -579,6 +579,9 @@ struct RecordDreamView: View {
             // Clean up temp audio file AFTER successful upload
             speechService.cleanupRecording()
 
+            // Track dream saved for Meta Ads conversion
+            await trackDreamSaved()
+
             showSaveConfirmation = true
         } catch {
             // Don't clean up on failure - keep file for potential retry
@@ -604,6 +607,28 @@ struct RecordDreamView: View {
             return transcript
         }
         return String(transcript.prefix(47)) + "..."
+    }
+
+    /// Track dream saved event for Meta Ads conversion
+    private func trackDreamSaved() async {
+        guard let userId = authService.currentUser?.id else { return }
+
+        // Get dream count to determine if this is the first dream
+        let dreamCountKey = "dream_count_\(userId.uuidString)"
+        let currentCount = UserDefaults.standard.integer(forKey: dreamCountKey)
+        let newCount = currentCount + 1
+        UserDefaults.standard.set(newCount, forKey: dreamCountKey)
+
+        let meta = MetaAnalyticsService.shared
+
+        if newCount == 1 {
+            // First dream - important conversion milestone
+            await meta.trackFirstDreamRecorded()
+            await meta.updateConversionValue(for: .firstDream)
+        }
+
+        // Track all dreams
+        await meta.trackDreamRecorded(dreamCount: newCount)
     }
 }
 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moonbeat AI - Legal</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.3);
+            --bg: #0f0f1a;
+            --surface: #1a1a2e;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 500px;
+            text-align: center;
+        }
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .tagline {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .link-card {
+            background: var(--surface);
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .link-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+        .link-icon {
+            font-size: 1.5rem;
+        }
+        .link-content {
+            text-align: left;
+        }
+        .link-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        .link-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .arrow {
+            margin-left: auto;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+        .link-card:hover .arrow {
+            transform: translateX(4px);
+            color: var(--primary);
+        }
+        .footer {
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🌙</div>
+        <h1>Moonbeat AI</h1>
+        <p class="tagline">Transform your dreams into art</p>
+
+        <div class="links">
+            <a href="privacy.html" class="link-card">
+                <span class="link-icon">🔒</span>
+                <div class="link-content">
+                    <div class="link-title">Privacy Policy</div>
+                    <div class="link-description">How we collect, use, and protect your data</div>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+
+            <a href="terms.html" class="link-card">
+                <span class="link-icon">📜</span>
+                <div class="link-content">
+                    <div class="link-title">Terms of Service</div>
+                    <div class="link-description">Rules and guidelines for using Moonbeat AI</div>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>Questions? Contact us at <a href="mailto:support@moonbeat.ai">support@moonbeat.ai</a></p>
+        </div>
+    </div>
+</body>
+</html>

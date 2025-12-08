@@ -534,7 +534,7 @@ struct SettingsView: View {
                 .padding(.leading, MBSpacing.xs)
 
             VStack(spacing: 0) {
-                Link(destination: URL(string: "https://yourapp.com/privacy")!) {
+                Link(destination: URL(string: "https://aid4nscud.github.io/moonbeat-ai/privacy.html")!) {
                     HStack(spacing: MBSpacing.md) {
                         Image(systemName: "hand.raised.fill")
                             .font(.system(size: 18))
@@ -559,7 +559,7 @@ struct SettingsView: View {
                 MBDivider()
                     .padding(.horizontal, MBSpacing.md)
 
-                Link(destination: URL(string: "https://yourapp.com/terms")!) {
+                Link(destination: URL(string: "https://aid4nscud.github.io/moonbeat-ai/terms.html")!) {
                     HStack(spacing: MBSpacing.md) {
                         Image(systemName: "doc.text.fill")
                             .font(.system(size: 18))

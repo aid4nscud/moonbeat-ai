@@ -161,10 +161,20 @@ struct SignInView: View {
                         .foregroundStyle(MBColors.primary)
                         .padding(.top, 4)
 
-                    Text("By continuing, you agree to our Terms & Privacy Policy")
-                        .font(.system(size: 12))
-                        .foregroundStyle(Color.white.opacity(0.35))
-                        .multilineTextAlignment(.center)
+                    HStack(spacing: 4) {
+                        Text("By continuing, you agree to our")
+                            .font(.system(size: 12))
+                            .foregroundStyle(Color.white.opacity(0.35))
+                        Link("Terms", destination: URL(string: "https://aid4nscud.github.io/moonbeat-ai/terms.html")!)
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(Color.white.opacity(0.5))
+                        Text("&")
+                            .font(.system(size: 12))
+                            .foregroundStyle(Color.white.opacity(0.35))
+                        Link("Privacy", destination: URL(string: "https://aid4nscud.github.io/moonbeat-ai/privacy.html")!)
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(Color.white.opacity(0.5))
+                    }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 40)

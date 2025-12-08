@@ -337,8 +337,8 @@ struct CustomSubscriptionView: View {
                 .multilineTextAlignment(.center)
 
             HStack(spacing: 16) {
-                Link("Terms of Use", destination: URL(string: "https://yourapp.com/terms")!)
-                Link("Privacy Policy", destination: URL(string: "https://yourapp.com/privacy")!)
+                Link("Terms of Use", destination: URL(string: "https://aid4nscud.github.io/moonbeat-ai/terms.html")!)
+                Link("Privacy Policy", destination: URL(string: "https://aid4nscud.github.io/moonbeat-ai/privacy.html")!)
             }
             .font(.system(size: 12, weight: .medium))
             .foregroundStyle(MBColors.textSecondary)

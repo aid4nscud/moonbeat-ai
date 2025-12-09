@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DreamListView: View {
     @EnvironmentObject var authService: AuthService
+    @EnvironmentObject var purchaseService: PurchaseService
     @EnvironmentObject var tabController: TabController
     @State private var dreams: [DreamDTO] = []
     @State private var isLoading = true
@@ -195,7 +196,7 @@ struct DreamListView: View {
             if let profile = authService.userProfile {
                 MBCreditsBadge(
                     credits: profile.creditsRemaining,
-                    isPro: profile.subscriptionTier == .pro
+                    isPro: purchaseService.isPro  // Use purchaseService for instant reactivity
                 )
             }
         }

@@ -517,7 +517,7 @@ struct InsightsDashboardView: View {
             if let profile = authService.userProfile {
                 MBCreditsBadge(
                     credits: profile.creditsRemaining,
-                    isPro: profile.subscriptionTier == .pro
+                    isPro: purchaseService.isPro  // Use purchaseService for instant reactivity
                 )
             }
         }

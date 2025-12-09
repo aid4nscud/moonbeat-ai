@@ -11,6 +11,7 @@ struct DreamDetailView: View {
     var onDelete: (() -> Void)? = nil  // Callback for parent to handle dismissal after delete
 
     @EnvironmentObject var authService: AuthService
+    @EnvironmentObject var purchaseService: PurchaseService
     @StateObject private var videoService = VideoService.shared
     @StateObject private var interpretationService = DreamInterpretationService.shared
     @Environment(\.dismiss) private var dismiss
@@ -332,7 +333,8 @@ struct DreamDetailView: View {
 
     @ViewBuilder
     private var aiInsightsSection: some View {
-        let isPro = interpretationService.canAccessInterpretations(profile: authService.userProfile)
+        // Use purchaseService.isPro for instant reactivity after purchase
+        let isPro = purchaseService.isPro
 
         VStack(alignment: .leading, spacing: MBSpacing.md) {
             // Section header with Pro badge

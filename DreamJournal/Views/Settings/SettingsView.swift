@@ -226,7 +226,7 @@ struct SettingsView: View {
 
                 // Free credits or subscription details
                 if let profile = authService.userProfile {
-                    if profile.subscriptionTier == .free {
+                    if !purchaseService.isPro {  // Use purchaseService for instant reactivity
                         MBDivider()
                             .padding(.horizontal, MBSpacing.md)
 
